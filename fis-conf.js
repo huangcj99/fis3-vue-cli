@@ -37,12 +37,11 @@ fis.media('prod')
 //////////////////资源编译处理//////////////////
 
 // es6编译  wxjssdk模块使用babel编译会报错
-fis.match('/src/page/**/*.js', {
+fis.match('/src/pages/**/*.js', {
   parser: fis.plugin('babel-6.x')
 });
 
-fis.match('/src/(**).vue', {
-  id: '$1',
+fis.match('/src/**.vue', {
   isMod: true,
   useSameNameRequire: true,
   parser: [
@@ -54,7 +53,7 @@ fis.match('/src/(**).vue', {
     fis.plugin('babel-6.x')
   ],
   rExt: '.js'
-})
+});
 
 // 插件配置
 fis.match('::packager', {
@@ -68,7 +67,7 @@ fis.match('::packager', {
             includeAsyncs: true, // 包含异步加载的模块
             ignore: [
               // 大文件，不作为合并项
-              '/node_modules/vue/dist/vue.js'
+              '/node_modules/vue/dist/vue'
             ]
         },
         scriptPlaceHolder: '<!--SCRIPT_PLACEHOLDER-->',
@@ -90,11 +89,7 @@ fis.hook('module' , {
 });
 
 //模块化文件配置
-fis.match('/src/**/*.js', {
-    isMod: true
-});
-
-fis.match('/node_modules/**.js}', {
+fis.match('/src/pages/**/*.js', {
     isMod: true
 });
 
