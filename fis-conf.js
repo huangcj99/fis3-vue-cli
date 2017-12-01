@@ -94,7 +94,7 @@ fis.match('/src/pages/**/*.js', {
 });
 
 // require.js本身不需要模块化，否则报错
-fis.match('/src/components_modules/require/2.1.18/require.js', {
+fis.match('/src/plugins/require/2.1.18/require.js', {
     isMod: false,
     useHash: false
 });

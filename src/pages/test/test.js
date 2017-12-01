@@ -5,7 +5,7 @@ import App from './components/app.vue'
  * [index description]
  * @type {Object}
  *
- *  @require ../../components_modules/reset.css
+ *  @require ../../assets/css/reset.css
  *  @require ./test.css
  */
 
