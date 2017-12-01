@@ -1,6 +1,6 @@
 ////////////////////资源发布配置////////////////////
 //打包压缩
-fis.config.set('wwwPath', '/build');
+fis.config.set('wwwPath', './build');
 
 //开发打包
 fis.media('dev_test')
@@ -10,37 +10,38 @@ fis.media('dev_test')
       })
     });
 
-//上线打包
-fis.media('prod')
-    .match('*.js', {
-        optimizer: fis.plugin('uglify-js', {
-            compress: {
-                drop_console: true
-            }
-        })
-    })
-    .match('*.css', {
-        // fis-optimizer-clean-css 插件进行压缩，已内置
-        optimizer: fis.plugin('clean-css')
-    })
-
-    .match('*.{js,css,png}', {
-      //md5，控制缓存
-      useHash: true
-    })
-    .match('*', {
-      deploy: fis.plugin('local-deliver', {
-        to: fis.config.get('wwwPath')
-      })
-    });
+// //上线打包
+// fis.media('prod')
+//     .match('*.js', {
+//         optimizer: fis.plugin('uglify-js', {
+//             compress: {
+//                 drop_console: true
+//             }
+//         })
+//     })
+//     .match('*.css', {
+//         // fis-optimizer-clean-css 插件进行压缩，已内置
+//         optimizer: fis.plugin('clean-css')
+//     })
+//
+//     .match('*.{js,css,png}', {
+//       //md5，控制缓存
+//       useHash: true
+//     })
+//     .match('*', {
+//       deploy: fis.plugin('local-deliver', {
+//         to: fis.config.get('wwwPath')
+//       })
+//     });
 
 //////////////////资源编译处理//////////////////
 
-// es6编译  wxjssdk模块使用babel编译会报错
+// es6编译
 fis.match('/src/pages/**/*.js', {
   parser: fis.plugin('babel-6.x')
 });
 
+//vue单文件编译以及es6编译
 fis.match('/src/**.vue', {
   isMod: true,
   useSameNameRequire: true,
@@ -55,7 +56,7 @@ fis.match('/src/**.vue', {
   rExt: '.js'
 });
 
-// 插件配置
+//打包配置
 fis.match('::packager', {
     // npm install [-g] fis3-postpackager-loader
     // 分析 __RESOURCE_MAP__ 结构，来解决资源加载问题
@@ -66,8 +67,9 @@ fis.match('::packager', {
             css: '${filepath}_aio.css',
             includeAsyncs: true, // 包含异步加载的模块
             ignore: [
-              // 大文件，不作为合并项
-              '/node_modules/vue/dist/vue'
+              //公共库不作为合并项
+              '/node_modules/vue/dist/vue.js',
+              '/node_modules/axios/dist/axios.js'
             ]
         },
         scriptPlaceHolder: '<!--SCRIPT_PLACEHOLDER-->',
@@ -84,7 +86,8 @@ fis.hook('module' , {
     forwardDeclaration: true,
     paths: {
       // 声明公用组件
-      'vue': '/node_modules/vue/dist/vue.js'
+      'vue': '/node_modules/vue/dist/vue.js',
+      'axios': '/node_modules/axios/dist/axios.js'
     }
 });
 

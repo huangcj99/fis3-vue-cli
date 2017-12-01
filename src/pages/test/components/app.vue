@@ -7,12 +7,16 @@
 
 <script>
   import Test from './test.vue'
+  import axios from 'axios'
 
   export default {
     data() {
       return {
         test: '11111'
       }
+    },
+    mounted() {
+      console.log(axios);
     },
     components: {
       Test
