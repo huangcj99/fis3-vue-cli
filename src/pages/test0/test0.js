@@ -7,7 +7,7 @@ import App from './components/app.vue'
  * @type {Object}
  *
  *  @require ../../assets/css/reset.css
- *  @require ./test.css
+ *  @require ./test0.css
  */
 
 console.log('实例化vue');

@@ -1,6 +1,6 @@
 <template>
-  <div class="">
-    000000
+  <div >
+    <span class="abc">000000</span>
     <Test2></Test2>
   </div>
 </template>
@@ -14,3 +14,10 @@
     }
   }
 </script>
+
+<style lang="css" scoped>
+  .abc {
+    color: blue;
+    font-size: 30px;
+  }
+</style>
