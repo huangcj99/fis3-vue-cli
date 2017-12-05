@@ -2,6 +2,13 @@ var getModulePath = require('./fis/utils.js').getModulePath;
 var ignoreModulePaths = require('./fis/ignore.module.config.js');
 var modulePaths = require('./fis/module.config.js');
 
+var autoprefixerOption = {
+  browsers: [
+    "> 5%",
+    "last 4 versions"
+  ]
+};
+
 ////////////////////资源发布配置////////////////////
 
 fis.config.set('wwwPath', './build');
@@ -12,31 +19,8 @@ fis.set('project.ignore', fis.get('project.ignore').concat([
 ]));
 fis.set('project.md5Length', 8);
 
-//开发打包
+//测试打包
 fis.media('dev_test')
-    .match('*.html', {
-        optimizer: fis.plugin('dfy-html-minifier', {
-          removeComments: true,
-          collapseWhitespace: true
-        })
-    })
-    .match('*.{js,vue}', {
-        optimizer: fis.plugin('uglify-js', {
-            compress: {
-                warnings: false,
-                drop_console: true
-            }
-        })
-    })
-    .match('*.css', {
-        // fis-optimizer-clean-css 插件进行压缩，已内置
-        optimizer: fis.plugin('clean-css')
-    })
-
-    .match('*.{js,css,png}', {
-      //md5，控制缓存
-      useHash: true
-    })
     .match('*', {
       deploy: fis.plugin('local-deliver', {
         to: fis.config.get('wwwPath')
@@ -46,18 +30,16 @@ fis.media('dev_test')
 //上线打包
 fis.media('prod')
     .match('*.{js,vue}', {
-        optimizer: fis.plugin('uglify-js', {
-            compress: {
-                warnings: false,
-                drop_console: true
-            }
-        })
+      optimizer: fis.plugin('uglify-js', {
+          compress: {
+              warnings: false,
+              drop_console: true
+          }
+      })
     })
-    .match('*.css', {
-        // fis-optimizer-clean-css 插件进行压缩，已内置
-        optimizer: fis.plugin('clean-css')
+    .match('/src/**.css', {
+      postprocessor: fis.plugin('autoprefixer', autoprefixerOption)
     })
-
     .match('*.{js,css,png}', {
       //md5，控制缓存
       useHash: true
@@ -70,8 +52,19 @@ fis.media('prod')
 
 //////////////////资源编译处理//////////////////
 
+//浏览器css添加前缀兼容
+fis.match('/src/**.css', {
+  postprocessor: fis.plugin('autoprefixer', autoprefixerOption)
+})
+
+// //sass编译
+// fis.match('*.scss', {
+//   rExt: '.css',
+//   parser: fis.plugin('node-sass')
+// })
+
 // es6编译
-fis.match('/src/pages/**/*.js', {
+fis.match('/src/**.js', {
   parser: fis.plugin('babel-6.x')
 });
 
@@ -101,12 +94,15 @@ fis.hook('module' , {
 });
 
 //模块化文件配置
-fis.match('/src/pages/**/*.js', {
+fis.match('/src/**.js', {
     isMod: true
 });
 
-//模块化文件配置
-fis.match('/node_modules/**/*.js', {
+fis.match('/src/**.vue', {
+    isMod: true
+});
+
+fis.match('/node_modules/**.js', {
     isMod: true,
     useHash: false
 });

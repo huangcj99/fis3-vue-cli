@@ -19,5 +19,7 @@
   .abc {
     color: blue;
     font-size: 30px;
+    box-sizing: border-box;
+    display: flex;
   }
 </style>

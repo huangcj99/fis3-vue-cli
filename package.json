@@ -25,7 +25,8 @@
     "fis-spriter-csssprites": "0.3.0",
     "fis3-hook-module": "1.2.2",
     "fis3-parser-vue-component": "^5.5.0",
-    "fis3-postpackager-loader": "1.2.7"
+    "fis3-postpackager-loader": "1.2.7",
+    "fis3-postprocessor-autoprefixer": "^1.0.0"
   },
   "license": "ISC"
 }
