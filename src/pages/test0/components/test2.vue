@@ -12,7 +12,7 @@
 <style lang="css" scoped>
   .ppp {
     color: black;
-    font-size: 30px;
+    font-size: 50px;
     box-sizing: border-box;
     display: flex;
   }

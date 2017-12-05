@@ -15,7 +15,7 @@
   export default {
     data() {
       return {
-        test: '11111',
+        test: '11111111',
         list: []
       }
     },
@@ -45,7 +45,7 @@
 
 <style lang="css" scoped>
 div {
-  color: red;
+  color: blue;
   box-sizing: border-box;
   display: flex;
 }

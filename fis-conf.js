@@ -15,7 +15,8 @@ fis.config.set('wwwPath', './build');
 fis.set('project.files', ['src/**', 'node_modules/**']);
 fis.set('project.ignore', fis.get('project.ignore').concat([
   '**.md',
-  '**.json'
+  '**.json',
+  '**.sh'
 ]));
 fis.set('project.md5Length', 8);
 
