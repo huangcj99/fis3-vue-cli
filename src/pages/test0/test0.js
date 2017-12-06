@@ -10,7 +10,7 @@ import App from './components/app.vue'
  *  @require ./test0.css
  */
 
-console.log('实例化vue111');
+console.log('实例化vue');
 
 Vue.prototype.Promise = Promise;
 

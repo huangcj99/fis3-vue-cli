@@ -51,6 +51,30 @@ fis.media('prod')
       })
     });
 
+////////////////////资源优化////////////////////
+
+// 开启对css中的图片合并
+fis.match('*.css', {
+    useSprite: true
+});
+
+// 雪碧图合并的最小间隔
+fis.config.set('settings.spriter.csssprites.margin', 5);
+
+// 雪碧图拼合方式为矩形
+fis.config.set('settings.spriter.csssprites.layout', 'matrix');
+
+// 开启图片压缩
+fis.match('*.png', {
+  // fis-optimizer-png-compressor 插件进行压缩，已内置
+  optimizer: fis.plugin('png-compressor')
+});
+
+// 如果要兼容低版本ie显示透明png图片，请使用pngquant作为图片压缩器，
+// 否则png图片透明部分在ie下会显示灰色背景
+// 使用spmx release命令时，添加--optimize或-o参数即可生效
+fis.config.set('settings.optimzier.png-compressor.type', 'pngquant');
+
 //////////////////资源编译处理//////////////////
 
 //浏览器css添加前缀兼容
